@@ -31,7 +31,7 @@ def write(data, path):
     data – данные для записи 
     path – путь к файлу для записи
     """
-    
+
     file = open(path, "w")
     writer = csv.writer(file)
 
@@ -39,10 +39,16 @@ def write(data, path):
         writer.writerow(line)
 
 def format_login(fullname):
+    """Возвращает имя в формате: Фамилия_ИО.
+
+    fullname – полное имя
+    """
     surname, name, parentname = fullname.split(" ")
     return surname + "_" + list(name)[0] + list(parentname)[0]
 
 def generate_password():
+    """Генерирует случайный пароль.
+    """
     alph = ""
     for i in range(ord('0'), ord('9') + 1):
         alph += chr(i)
@@ -70,6 +76,10 @@ def generate_password():
         return generate_password()
 
 def add_fields(data):
+    """Добавляет к таблице поля с логином и паролем.
+
+    data – данные таблицы
+    """
     data[0].append("login")
     data[0].append("password")
 
@@ -80,6 +90,8 @@ def add_fields(data):
         data[i].append(password)
 
 def main():
+    """Точка входа программы.
+    """
     data = read()
     add_fields(data)
     write(data, "students_password.csv")

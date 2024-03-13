@@ -38,6 +38,12 @@ def write(data, path):
         writer.writerow(line)
 
 def hash(s, p = 67, m = 1000000009):
+    """Возвращает полиномиальный хэш строки s.
+
+    s – входная строк
+    p – параметр p
+    m – параметр m
+    """
     s = list(s)
     sum = 0
     for i in range(len(s)):
@@ -46,6 +52,10 @@ def hash(s, p = 67, m = 1000000009):
     return sum
 
 def change_id(data):
+    """Заменяет id учеников в таблице на хэш-сумму по их ФИО.
+
+    data – данные таблицы
+    """
     for i in range(1, len(data)):
         sum = hash(data[i][1])
         data[i][0] = sum
