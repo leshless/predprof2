@@ -1,6 +1,9 @@
 import csv
 
 def read():
+    """Открывает csv файл и считывает данные.
+    """
+
     path = "students.csv"
     file = open(path)
     reader = csv.reader(file)
@@ -22,6 +25,12 @@ def read():
     return rows
 
 def write(data, path):
+    """Записывает данные в csv файл.
+
+    data – данные для записи 
+    path – путь к файлу для записи
+    """
+
     file = open(path, "w")
     writer = csv.writer(file)
 
@@ -29,10 +38,18 @@ def write(data, path):
         writer.writerow(line)
 
 def shorten(fullname):
+    """Возвращает имя в формате: И. Фамилия.
+
+    fullname – полное имя
+    """
     surname, name, _ = fullname.split(" ")
     return list(name)[0] + ". " + surname
 
 def search(data):
+    """Осуществляет интерактивное взаимодействие с поиском по id проекта.
+
+    data – данные таблицы
+    """
     while True:
         id = input()
 
@@ -48,8 +65,9 @@ def search(data):
         if not found:
             print("Ничего не найдено.")
 
-
 def main():
+    """Точка входа программы.
+    """
     data = read()
     search(data)
 

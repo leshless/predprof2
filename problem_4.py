@@ -2,6 +2,9 @@ import csv
 import random
 
 def read():
+    """Открывает csv файл и считывает данные.
+    """
+
     path = "students.csv"
     file = open(path)
     reader = csv.reader(file)
@@ -23,6 +26,12 @@ def read():
     return rows
 
 def write(data, path):
+    """Записывает данные в csv файл.
+
+    data – данные для записи 
+    path – путь к файлу для записи
+    """
+    
     file = open(path, "w")
     writer = csv.writer(file)
 
@@ -30,15 +39,50 @@ def write(data, path):
         writer.writerow(line)
 
 def format_login(fullname):
-
+    surname, name, parentname = fullname.split(" ")
+    return surname + "_" + list(name)[0] + list(parentname)[0]
 
 def generate_password():
     alph = ""
+    for i in range(ord('0'), ord('9') + 1):
+        alph += chr(i)
+    for i in range(ord('a'), ord('z') + 1):
+        alph += chr(i)
+    for i in range(ord('A'), ord('Z') + 1):
+        alph += chr(i)
 
+
+    password = ""
+    digits = False
+    lower = False
+    upper = False
+    for i in range(8):
+        char = alph[random.randint(0, len(alph)-1)]
+        password += char
+
+        digits = digits or ('0' <= char <= '9')
+        lower = lower or ('a' <= char <= 'z')
+        upper = upper or ('A' <= char <= 'Z')
+
+    if digits and lower and upper:
+        return password
+    else:
+        return generate_password()
+
+def add_fields(data):
+    data[0].append("login")
+    data[0].append("password")
+
+    for i in range(1, len(data)):
+        login = format_login(data[i][1])
+        password = generate_password()
+        data[i].append(login)
+        data[i].append(password)
 
 def main():
     data = read()
-    search(data)
+    add_fields(data)
+    write(data, "students_password.csv")
 
 
 main()
